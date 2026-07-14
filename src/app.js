@@ -9,11 +9,11 @@ const cors = require("cors")
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://your-frontend-url.vercel.app"
-  ],
-  credentials: true
+    origin: [
+        "http://localhost:5173",
+        "https://front-end-psi-woad.vercel.app"
+    ],
+    credentials: true
 }));
 // Routes
 app.use("/api/v1/auth", authRoute);
