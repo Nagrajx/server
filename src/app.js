@@ -12,7 +12,7 @@ app.use(
     cors({
         origin: [
             "http://localhost:5173",
-            "https://front-end-psi-woad.vercel.app",
+             "https://front-end-orcin-zeta.vercel.app",
         ],
         credentials: true,
         methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
