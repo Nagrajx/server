@@ -1,17 +1,17 @@
 const User = require("../model/auth_model");
-const bcrypt  =  require("bcrypt")
+const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
 
 // Register Controller
-async function register(req,res) {
-    
+async function register(req, res) {
+
 
     try {
-        const { name, email, password ,role } = req.body;
+        const { name, email, password, role } = req.body;
 
         // Check if all fields are provided
-        if (!name || !email || !password ) {
+        if (!name || !email || !password) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
@@ -54,9 +54,7 @@ async function register(req,res) {
 
 
 // login Controller
-async function login(req,res) 
-    
- {
+async function login(req, res) {
     try {
         const { email, password } = req.body;
 
@@ -95,12 +93,16 @@ async function login(req,res)
             { expiresIn: "7d" }
         );
 
-        
+
         user.password = undefined;
 
         // Store token in cookie
         res.cookie("token", token, {
-            httpOnly: true,})
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
 
         return res.status(200).json({
             success: true,
@@ -119,25 +121,25 @@ async function login(req,res)
 };
 
 async function logout(req, res) {
-  try {
-    res.clearCookie("token", {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: false, // true in production with HTTPS
-    });
+    try {
+        res.clearCookie("token", {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: false, // true in production with HTTPS
+        });
 
-    return res.status(200).json({
-      success: true,
-      message: "Logout successful",
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
+        return res.status(200).json({
+            success: true,
+            message: "Logout successful",
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
 }
 
-module.exports = {register,login ,logout}
+module.exports = { register, login, logout }
 
 
