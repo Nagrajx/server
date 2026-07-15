@@ -8,13 +8,17 @@ const cors = require("cors")
 
 app.use(express.json());
 app.use(cookieParser())
-app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "https://front-end-psi-woad.vercel.app"
-    ],
-    credentials: true
-}));
+app.use(
+    cors({
+        origin: [
+            "http://localhost:5173",
+            "https://front-end-psi-woad.vercel.app",
+        ],
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+    })
+);
 // Routes
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/employee", employeeRoute);
